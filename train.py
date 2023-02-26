@@ -145,8 +145,6 @@ def evaluate(loader):
 
 
 def main():
-
-    # Training settings
     parser = argparse.ArgumentParser(description="PyTorch MNIST Example")
     parser.add_argument(
         "--batch-size",
@@ -219,13 +217,11 @@ def main():
     test_loader = DataLoader(
         test_dataset, batch_size=args.batch_size, shuffle=False)
 
-    # Setup model
     model = Net().to(device)
     crit = torch.nn.BCELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
     scheduler = StepLR(optimizer, step_size=1, gamma=args.gamma)
 
-    # Training loop
     for epoch in range(1, args.epochs + 1):
         train_loss = train(model, crit, device, train_loader, optimizer, epoch)
         test_loss, test_acc = evaluate(test_loader)
